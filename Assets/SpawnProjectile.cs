@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnProjectile : MonoBehaviour
 {
     public GameObject arrow;
-    public GameObject enemyParent;
+    public GameObject arrowParent;
     public GameObject spawnPoint;
     public float attackSpeed;
 
@@ -20,11 +20,11 @@ public class SpawnProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeStamp = Time.time + (1 - (0.1f * attackSpeed));
         
         if (timeStamp <= Time.time)
         {
-            Instantiate(arrow, spawnPoint.transform.position, Quaternion.identity, enemyParent.transform);
+            timeStamp = Time.time + (1 - (0.1f * attackSpeed));
+            Instantiate(arrow, spawnPoint.transform.position, spawnPoint.transform.rotation, arrowParent.transform);
         }
 
     }
