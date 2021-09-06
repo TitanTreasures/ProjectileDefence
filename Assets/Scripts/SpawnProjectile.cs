@@ -24,7 +24,10 @@ public class SpawnProjectile : MonoBehaviour
         if (timeStamp <= Time.time)
         {
             timeStamp = Time.time + (1 - (0.1f * attackSpeed));
-            Instantiate(arrow, spawnPoint.transform.position, spawnPoint.transform.rotation, arrowParent.transform);
+            GameObject arrowGO = Instantiate(arrow, spawnPoint.transform.position, spawnPoint.transform.rotation, arrowParent.transform);
+
+            //Shoot towards the enemies
+            arrowGO.transform.Rotate(0,-90,0);
         }
 
     }
