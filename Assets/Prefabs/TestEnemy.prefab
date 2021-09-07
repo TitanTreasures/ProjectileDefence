@@ -49,6 +49,7 @@ MonoBehaviour:
   health: 100
   startHealth: 100
   healthbar: {fileID: 7914402708924728997}
+  isAlive: 1
   deathPoof: {fileID: 5394115040759097578}
   healthbarGo: {fileID: 5643753149150687913}
   enemyGo: {fileID: 5195293092667430601}
@@ -200,6 +201,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 420756184247553001, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
+      propertyPath: m_IsLocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 420756184247553001, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
+      propertyPath: m_IsContraintActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 420756184247553001, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
+      propertyPath: m_TranslationAtRest.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 420756184247553001, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
+      propertyPath: m_TranslationOffset.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 420756184247553001, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform
       value: 
       objectReference: {fileID: 5195293091847137375}
@@ -285,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6412512043429981398, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6412512043429981398, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -298,6 +315,10 @@ PrefabInstance:
     - target: {fileID: 6412512043429981398, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7034168388502369853, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ba6a0cba45f7ef4885f36a44c94179c, type: 3}

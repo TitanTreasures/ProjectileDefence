@@ -77,12 +77,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3482b3f545f44b844974585d676e873f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoredInitialObject: {fileID: 0}
-  pierce: 0
-  fork: 0
-  chain: 2
+  ignoreGameObject: {fileID: 0}
+  pierce: 4
+  fork: 1
+  chain: 10
   speed: 1000
-  damage: 10
+  damage: 0
   FX1: {fileID: 4771311883892021325}
   FX2: {fileID: 4771521170202444147}
 --- !u!1001 &4681015288676728263

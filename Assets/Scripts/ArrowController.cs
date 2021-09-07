@@ -9,7 +9,7 @@ public class ArrowController : MonoBehaviour
     private Rigidbody rb;
 
     [HideInInspector]
-    public GameObject ignoredInitialObject = null;
+    public GameObject ignoreGameObject = null;
 
     public int pierce, fork, chain;
     public float speed;
@@ -22,6 +22,8 @@ public class ArrowController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FX1 = transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
+        FX2 = transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * speed);
         AM = AudioManager.instance;
@@ -29,20 +31,15 @@ public class ArrowController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == null || other.gameObject.name.Contains("Arrow") || other.gameObject == ignoredInitialObject)
+        if (other.gameObject == null || other.gameObject.name.Contains("Arrow") || other.gameObject == ignoreGameObject)
         {
-            //ignore only once!
-            if (other.gameObject == ignoredInitialObject)
-            {
-                ignoredInitialObject = null;
-            }
-            //Do nothing
+
 
         }
         else if (other.gameObject.name.Contains("Enemy"))
         {
             //reset the ignored object now that arrow has traveled
-            ignoredInitialObject = null;
+            ignoreGameObject = other.gameObject;
 
             //take damage
             other.transform.parent.GetComponent<EnemyController>().TakeDamage(damage);
@@ -107,7 +104,7 @@ public class ArrowController : MonoBehaviour
         //change the rotations
         forkingArrow.transform.Rotate(0, 30, 0);
         //add the object to be ignored by the spawned arrow
-        forkingArrow.GetComponent<ArrowController>().ignoredInitialObject = ignoreObject;
+        forkingArrow.GetComponent<ArrowController>().ignoreGameObject = ignoreObject;
 
         transform.Rotate(0, -30, 0);
         rb.AddForce(transform.forward * speed);
@@ -134,7 +131,6 @@ public class ArrowController : MonoBehaviour
                 target = i;
             }
         }
-        Debug.Log(enemies.GetChild(target).gameObject.name);
 
         if (target > -1)
         {
@@ -142,7 +138,8 @@ public class ArrowController : MonoBehaviour
             
             Vector3 lookPos = enemies.GetChild(target).transform.position - transform.position;
             //test this
-            transform.Rotate(0, Vector3.Angle(lookPos, transform.forward) * Mathf.Sign(transform.position.x) * Mathf.Sign(transform.position.z) * Mathf.Sign(enemies.GetChild(target).transform.position.z) * Mathf.Sign(enemies.GetChild(target).transform.position.x), 0);
+            float angle = Vector3.SignedAngle(lookPos, transform.forward, Vector3.up);
+            transform.Rotate(0, angle*-1, 0);
 
             rb.AddForce(transform.forward * speed);
 
