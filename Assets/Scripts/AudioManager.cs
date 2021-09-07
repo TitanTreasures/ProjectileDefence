@@ -32,8 +32,6 @@ public class AudioManager : MonoBehaviour {
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
-        instance.Play("Soundtrack2");
-        instance.Stop("Move");
     }
 
     public void Play(string name)

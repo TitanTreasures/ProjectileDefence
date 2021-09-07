@@ -13,6 +13,9 @@ public class ArrowController : MonoBehaviour
 
     public int pierce, fork, chain;
     public float speed;
+    public float damage;
+
+    public ParticleSystem FX1, FX2;
 
     AudioManager AM;
 
@@ -42,10 +45,14 @@ public class ArrowController : MonoBehaviour
             ignoredInitialObject = null;
 
             //take damage
-            //other.GetComponent<EnemyController>().TakeDamage();
+            other.transform.parent.GetComponent<EnemyController>().TakeDamage(damage);
 
-            //Audio
+            //SFX
             AM.Play("Hit");
+
+            //FX
+            FX1.Play();
+            FX2.Play();
 
             rb.velocity = Vector3.zero;
 
@@ -89,7 +96,7 @@ public class ArrowController : MonoBehaviour
 
     private void Pierce()
     {
-
+        rb.AddForce(transform.forward * speed);
     }
 
     private void Fork(GameObject ignoreObject)
@@ -110,28 +117,49 @@ public class ArrowController : MonoBehaviour
     private void Chain(GameObject other)
     {
 
-        Transform enemies = other.transform.parent;
+        Transform enemies = other.transform.root;
+        if (enemies == null)
+        {
+            Debug.Log("enemies = null");
+        }
 
         float distance2 = 999;
         int target = -1;
         for (int i = 0; i < enemies.childCount; i++)
         {
             float distance1 = Vector3.Distance(enemies.GetChild(i).transform.position, transform.position);
-            if (distance1 < distance2 && enemies.GetChild(i).gameObject != other.gameObject)
+            if (distance1 < distance2 && enemies.GetChild(i).gameObject != other.transform.parent.gameObject && enemies.GetChild(i).GetComponent<EnemyController>().isAlive)
             {
                 distance2 = distance1;
                 target = i;
             }
         }
+        Debug.Log(enemies.GetChild(target).gameObject.name);
+
         if (target > -1)
         {
             //find the direction
             
             Vector3 lookPos = enemies.GetChild(target).transform.position - transform.position;
-
-            transform.Rotate(0, Vector3.Angle(lookPos, transform.forward)*Mathf.Sign(enemies.GetChild(target).transform.position.z), 0);
+            //test this
+            transform.Rotate(0, Vector3.Angle(lookPos, transform.forward) * Mathf.Sign(transform.position.x) * Mathf.Sign(transform.position.z) * Mathf.Sign(enemies.GetChild(target).transform.position.z) * Mathf.Sign(enemies.GetChild(target).transform.position.x), 0);
 
             rb.AddForce(transform.forward * speed);
+
+            /*
+            Vector3 targetDirection = enemies.GetChild(target).transform.position - transform.position;
+            Vector3 currentDirection = transform.forward;
+
+            float angle;
+            double dotProduct = targetDirection.x * targetDirection.y + currentDirection.x * currentDirection.y;
+            double magnitude = Math.Sqrt(Math.Pow(targetDirection.x, 2) + Math.Pow(targetDirection.y, 2)) * Math.Sqrt(Math.Pow(currentDirection.x, 2) + Math.Pow(currentDirection.y, 2));
+            angle = (float)Math.Cos(dotProduct / magnitude);
+            Debug.Log(targetDirection);
+            Debug.Log(currentDirection);
+            Debug.Log(dotProduct);
+            Debug.Log(magnitude);
+            Debug.Log(angle);
+            */
         }
         else
         {
